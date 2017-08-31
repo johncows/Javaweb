@@ -70,3 +70,15 @@
           Properties pro = new Properties();
           pro.load(is); //xml各字段有规定字段名
           dataSource = BasicDataSourceFactory.createDataSource(pro);
+
+
+
+
+
+
+
+
+
+
+
+  
