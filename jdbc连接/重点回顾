@@ -1,0 +1,72 @@
+各种jar包作用：
+  1.commons-dbutils
+      commons-dbutils 是 Apache 组织提供的一个开源 JDBC 工具类库，对传统操作数据库的类进行二次封装,旨在方便开发
+      根据开发需求 一般情况下会使用到下面的类：ResultSetHandler 和 QueryRunner 2个类 但遗憾的是由于先前没有注意
+      到dbutil的作用 导致所有的代码都没有使用上
+
+      1. QueryRunner类
+          QueryRunner中提供对sql语句操作的API
+          它主要有三个方法
+          　　query() 用于执行select
+          　　update() 用于执行insert/update/delete
+          　　batch() 批处理
+
+          基本使用方法：
+              QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource())；
+              可以看出c3p0获得的线程池 直接被作为参数 new 出来一个QR对象
+              接着
+                  qr.query(sql,ResultSetHandler,Object...params);
+                  qr.query(conn,sql,ResultSetHandler,Object...params);
+                  第二种是没有线程池参数新建的情况下时候用的
+                  返回的是一个ResultSetHandler类的参数（下面提到）
+                  代码示例：
+                    List<product> ls = qs.query(sql, new BeanListHandler<product>(product.class));
+                    product是新建的类 意在匹配sql中的表对象
+
+                  当然RSH 不同的对象返回的类型也有所不同。
+
+                update 同上 返回的是int型参数,代表sql影响条数
+
+                benth 批量操作 可用于删除  //不懂
+                  public void delBooks(String[] ids) throws SQLException {
+                      QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource());
+                      Object[][] params = new Object[ids.length][];//高维确定执行sql语句的次数，低维是给？赋值
+                      for (int i = 0; i < params.length; i++) {
+                          params[i] = new Object[]{ids[i]};//抽取出ids的string数据传给params
+                      }
+                      qr.batch("delete from books where id=?", params);
+                  }
+
+
+
+            2.ResultSetHandler  结果集的存取
+              BUtils提供了一个接口ResultSetHandler，它就是用来ResultSet转换成目标类型的工具。你可以自己去实现这个接口，把ResultSet转换成你想要的类型。
+              DBUtils提供了很多个ResultSetHandler接口的实现，这些实现已经基本够用了，我们通常不用自己去实现ResultSet接口了。
+                MapHandler：单行处理器！把结果集转换成Map<String,Object>，其中列名为键(key)
+                MapListHandler：多行处理器！把结果集转换成List<Map<String,Object>>；
+                ColumnListHandler：多行单列处理器！把结果集转换成List<Object>，使用ColumnListHandler时需要指定某一列的名称或编号，例如：new ColumListHandler(“name”)表示把name列的数据放到List中。
+                ScalarHandler：单行单列处理器！把结果集转换成Object。一般用于聚集查询，例如select count(*) from tab_student。
+
+                比较常用的
+                BeanHandler：单行处理器！把结果集转换成Bean，该处理器需要Class参数，即Bean的类型；
+                BeanListHandler：多行处理器！把结果集转换成List<Bean>；
+
+
+
+
+  2.mysql-connector-java
+          MYSQL官方提供的驱动包
+
+
+
+
+  3.c3p0工具类 线程池
+        ComboPooledDataSource datasource  = new ComboPooledDataSource();
+        若加参数 则会选择其他的配置项目 具体见 c3p0-config.xml (文件名一定要这个)
+
+
+  4.dbcp加pool 线程池
+          InputStream is = dbcp.class.getClassLoader().getResourceAsStream("db.properties");
+          Properties pro = new Properties();
+          pro.load(is); //xml各字段有规定字段名
+          dataSource = BasicDataSourceFactory.createDataSource(pro);
