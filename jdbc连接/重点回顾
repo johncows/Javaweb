@@ -65,16 +65,11 @@
         若加参数 则会选择其他的配置项目 具体见 c3p0-config.xml (文件名一定要这个)
 
 
-  4.dbcp加pool 线程池
+  4.dbcp+pool 线程池
           InputStream is = dbcp.class.getClassLoader().getResourceAsStream("db.properties");
           Properties pro = new Properties();
           pro.load(is); //xml各字段有规定字段名
           dataSource = BasicDataSourceFactory.createDataSource(pro);
-
-
-
-
-
 
 
 
