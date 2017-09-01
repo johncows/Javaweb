@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>web提交</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 配置全局的初始化参数 -->
+  <context-param>
+  	<param-name>name config</param-name>
+ 	<param-value>value config</param-value>
+  </context-param>
+  
+  
+  
+  <servlet>
+    <description></description>
+    <display-name>checkuser</display-name>
+    <servlet-name>checkuser</servlet-name>
+    <servlet-class>com.servlet.checkuser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>checkuser</servlet-name>
+    <url-pattern>/checkuser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>adduser</display-name>
+    <servlet-name>adduser</servlet-name>
+    <servlet-class>com.servlet.adduser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adduser</servlet-name>
+    <url-pattern>/adduser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>context</display-name>
+    <servlet-name>context</servlet-name>
+    <servlet-class>com.servlet.context</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>context</servlet-name>
+    <url-pattern>/context</url-pattern>
+  </servlet-mapping>
+</web-app>
