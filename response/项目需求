@@ -3,8 +3,25 @@
    2.生成验证码（验证码原理及其实现）
 
 
-知识关键：
+知识点：
   1.生成重定向
   2.生成自动刷新
   3.了解url的正确填写
-  
+
+  4.在响应中以字节码写入文件(图片)
+    一: /web14/src/content/GetPhoto.java类展示了如何以字节码形式去读取服务端的内容 但是 该文件是无法被下载的（手动除外）
+        为解决上述问题 提供以下？步来解决：
+        1.将指向资源的网页的url加入参数 <a href="url?filename="">自定义一个参数来判断该文件的类型
+        2.将参数filename从request中提取出,先将文件名设置为Mime的类型（完成tomcat中的文件名格式映射),并将响应头的属性
+        Context-Disposition = attachment;filename=  加上相对文件名
+        具体代码如下
+            //设置文件类型-----客服端通过文件的mime类型去区分类型 (规范开发需要去书写)
+            response.setContentType(this.getServletContext().getMimeType(filename));
+            //告诉客服端该文件不要解析,以附件模式打开
+            response.setHeader("Content-Disposition", "attachment;filename="+filename);
+
+
+
+注意事项：
+  .out流不需要挂壁
+  .getwrite() 与 getOutputStream() 不能同时为response调用 
