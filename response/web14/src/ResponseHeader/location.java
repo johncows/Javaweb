@@ -11,14 +11,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class location extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*
 		 * 设置状态码 为 302 重定向
 		 * 将文件的地址重定向到 首页的一个loca.html网页
 		 */
-		
-		
 		response.setStatus(302);
 		response.setHeader("location", "/web14/WebContent/loca.html");
 	}

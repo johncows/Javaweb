@@ -5,12 +5,15 @@
 
 知识点：
   1.生成重定向
-  2.生成自动刷新
+        response.setStatus(302);
+        response.setHeader("location", "/web14/WebContent/loca.html");
+  2.生成自动刷新(5秒定时刷新)
+        response.setHeader("refresh", "5,/web14/loca.html");
   3.了解url的正确填写
-
+        web内容发布在webcontent上,因此资源都需要放在web目录下
   4.在响应中以字节码写入文件(图片)
-    一: /web14/src/content/GetPhoto.java类展示了如何以字节码形式去读取服务端的内容 但是 该文件是无法被下载的（手动除外）
-        为解决上述问题 提供以下？步来解决：
+        /web14/src/content/GetPhoto.java类展示了如何以字节码形式去读取服务端的内容 但是 该文件是无法被下载的（手动除外）
+        为解决上述问题 提供以下2步来解决：
         1.将指向资源的网页的url加入参数 <a href="url?filename="">自定义一个参数来判断该文件的类型
         2.将参数filename从request中提取出,先将文件名设置为Mime的类型（完成tomcat中的文件名格式映射),并将响应头的属性
         Context-Disposition = attachment;filename=  加上相对文件名
@@ -19,9 +22,16 @@
             response.setContentType(this.getServletContext().getMimeType(filename));
             //告诉客服端该文件不要解析,以附件模式打开
             response.setHeader("Content-Disposition", "attachment;filename="+filename);
+    5.验证码原理：
+        利用swing图形生成图片，将成语作为txt读入，一次读一个，在对文字进行加工并生成图片，该文本放在web_inf下面，放置被访问
+        并将生成的图片字节码 写入到图片的src下
+
+        注意：web服务器会自动缓存文件，当通过固定url去访问时，当服务器接受到该servlet请求时，会自动的将缓存文件写入，为解决该问题
+        将src的属性改为 src="/servlet?time="+new Date().getTime()
+        使得文件不会去读取缓存文件
 
 
 
 注意事项：
   .out流不需要挂壁
-  .getwrite() 与 getOutputStream() 不能同时为response调用 
+  .getwrite() 与 getOutputStream() 不能同时为response调用

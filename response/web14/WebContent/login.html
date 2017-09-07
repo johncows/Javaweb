@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function chan(obj){
+		obj.src="/web14/logintest?time = "+new Date().getTime();
+	}
+</script>
+</head>
+<body>
+	<form action="post">
+		姓名<input type= "text"><br>
+		密码<input type = "password"><br>
+		验证码<input type = "text"><img src="/web14/logintest" onclick="chan(this)"><br>
+		<button type = "submit">点我看骚图</button>
+	</form>
+</body>
+</html>
