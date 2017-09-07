@@ -23,5 +23,5 @@
 
 
 注意事项：
-  .out流不需要挂壁
+  .out流不需要手动关闭
   .getwrite() 与 getOutputStream() 不能同时为response调用 
