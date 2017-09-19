@@ -1,0 +1,30 @@
+通过学习 完成一下的2个案例
+
+1.注册账号
+  步骤如下：
+      1.首先 将html的form表单中的数据与name进行绑定，提交到一个未指定的servlet
+      2.根据servlet进行如下操作 接受传输的数据 连接数据库 进行注册
+
+  知识点：
+      1.利用get方式去获得请求体的字段比较麻烦 这里选择使用的是一个BeanUtil类
+        使用方式: 建一个与提交表单属性相符的类 注意该类的字段务必与name属性相同，默认构造函数
+            将request的属性以map类型提取后 使用如下语句
+            Map<String, String[]> map = request.getParameterMap();
+        		User user=new User();
+        		BeanUtils.populate(user, map);
+        	这个时候 user便被赋值了
+      2.使用UUID作为随机码来辨别唯一用户
+        使用语法:
+        String uid = UUID.randomUUID().toString();
+
+   问题：
+      1.如何解决编码问题，当上汉字作为用户属性时会自动转换成错误的字符
+            首先粗略的了解下什么是解码什么是编码
+                编码 将用户所输入的字符集解析成字节码
+                解码 将字节码根据规定的编码表映射成具体的字符
+
+            post方式：将 request.setCharacter("UTF-8") 将方法体直接以utf-8方式解码
+
+            get方式：先获取被服务端默认解码方式所解码的文件，再将乱码编码成原先的字节码后，以新的编码进行解码(iso编码 解码按utf-8)
+
+      2.对于一些text的输入栏如果不填写 便会以""的形式作为参数传入其中，而date 单复选框则会null形式写入
