@@ -34,3 +34,16 @@
 
     问题 当客服端关闭 session会消失吗？
     不会 这是session被新建 找不到原对应的session 但在服务器上仍然存在
+
+
+    实现案例知识点：
+      在访问验证码刷新时,设置servlet的session对应键值 与请求体进行比对
+      // 将验证码内容保存session
+		    request.getSession().setAttribute("checkcode_session", word);
+      //在提交表单位置进行校验
+      if(!checkCode_session.equals(checkCode_client)){
+          request.setAttribute("loginInfo", "您的验证码不正确");
+          request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+
+      该代码过于冗余 将会在25day结束后 再次进行开发
