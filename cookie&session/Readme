@@ -9,22 +9,28 @@
               cookie生存的设置 包括使用时间设置setAge(second)与作用域
               设置的path 即将当访问特定地址时才会request提交cookie
 
-              对于地址的设置： 默认则代表设置这个目录的兄弟目录与其子女都需要提交
+              对于地址的设置:默认则代表设置这个目录的兄弟目录与其子女都需要提交
               而对于地址设置 注意这个类型 setpath("/")  这表示在整个服务器下都会
               去提交cookie 需要改变一下我们的观点 不是一个网站就是一个服务器 他们
-              之间没有必要的联系关系
+              之间没有必要的联系
 
+        cookie的删除与新建
+              测试demo /WEB16/index.html
 
-
-
-
-
-        cookie的删除与创造
-              代码详 /WEB16/index.html
         cookie被产生的原因
               cookie是用来存储信息的对象 可以存对象的包括Context对象和request的context对象
               全局对象使用的话 全部放在web端 但在无状态登陆下 context对象无疑是不能被使用
               request的context对象只会存在一次访问 因此也不可能去使用
 
 
-      详见demo
+案例二
+    session知识点:
+        session是基于cookie的原理所构成的 简单来说在客服端存储一个flag 与服务器的session对应
+      服务器的session具有一定的存储空间 也可以说 形成某种意义上键值对应
+
+    原理：当某个servlet需要你提交session时,服务器会查询你的客户端是否含有session的编号
+    如果含有session，就去服务器查询该session 否则新建一个session(由appche服务器自己添加)
+    也就是当执行到 httpsession session = request.getsession()
+
+    问题 当客服端关闭 session会消失吗？
+    不会 这是session被新建 找不到原对应的session 但在服务器上仍然存在
