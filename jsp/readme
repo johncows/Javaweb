@@ -1,0 +1,40 @@
+jsp文件
+	内容重点：
+		jsp文件的类型----相当于html文件，只是嵌入了一些java代码，其本质等同于servlet
+		jsp脚本嵌入方式：
+			1）<%java代码%> ----- 内部的java代码翻译到service方法的内部
+			2）<%=java变量或表达式> ----- 会被翻译成service方法内部out.print()
+			3）<%!java代码%> ---- 会被翻译成servlet的成员的内容
+			
+		jsp注释:不同注释可见范围有所不同
+			1）Html注释：<!--注释内容--> ---可见范围 jsp源码、翻译后的servlet、页面(危险)
+			2）java注释：//单行注释  /*多行注释*/ --可见范围 jsp源码 翻译后的servlet
+			3）jsp注释：<%--注释内容--%> ----- 可见范围 jsp源码可见(安全)
+			
+		jsp运行原理---扩展
+			web工程发布之后 第一次访问该页面(.jsp文件)时,tomcat将该文件解析成java文件(servlet),
+			进行编译运行(编译后的class文件位置在work目录下)
+			
+		
+		jsp指令指导jsp编译和运行的命令(基本上配置文件没必要自己配置)
+			
+			1）page指令 --- 属性最多的指令（实际开发中page指令默认）属性最多的一个指令，根据不同的属性，指导整个页面特性
+			格式：<%@ page 属性名1= "属性值1" 属性名2= "属性值2" ...%>
+			常用属性如下：
+			language：jsp脚本中可以嵌入的语言种类
+			pageEncoding：当前jsp文件的本身编码---内部可以包含contentType
+			contentType：response.setContentType(text/html;charset=UTF-8)
+			session：是否jsp在翻译时自动创建session
+			import：导入java的包
+			errorPage：当当前页面出错后跳转到哪个页面
+			isErrorPage：当前页面是一个处理错误的页面
+			
+			
+			2）include指令
+			页面包含（静态包含）指令，可以将一个jsp页面包含到另一个jsp页面中
+			格式：<%@ include file="被包含的文件地址"%>
+
+			
+			3）taglib指令
+			在jsp页面中引入标签库（jstl标签库、struts2标签库）
+			格式：<%@ taglib uri="标签库地址" prefix="前缀"%>
