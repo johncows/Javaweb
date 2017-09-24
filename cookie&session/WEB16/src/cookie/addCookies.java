@@ -31,7 +31,7 @@ public class addCookies extends HttpServlet {
 		cook.setMaxAge(30*10); //设置cookie存活的时间
 		
 		response.addCookie(cook);
-		response.addCookie(cook1);//会存在设置2个cookie 但最终在提交cookie时最后提交的恩惠覆盖之前的cookie		
+		response.addCookie(cook1);//会存在设置2个cookie 但最终在提交cookie时最后提交的会覆盖之前的cookie		
 	}
 
 	/**
