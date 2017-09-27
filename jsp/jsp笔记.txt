@@ -5,19 +5,19 @@ jsp文件
 			1）<%java代码%> ----- 内部的java代码翻译到service方法的内部
 			2）<%=java变量或表达式> ----- 会被翻译成service方法内部out.print()
 			3）<%!java代码%> ---- 会被翻译成servlet的成员的内容
-			
+
 		jsp注释:不同注释可见范围有所不同
 			1）Html注释：<!--注释内容--> ---可见范围 jsp源码、翻译后的servlet、页面(危险)
 			2）java注释：//单行注释  /*多行注释*/ --可见范围 jsp源码 翻译后的servlet
 			3）jsp注释：<%--注释内容--%> ----- 可见范围 jsp源码可见(安全)
-			
+
 		jsp运行原理---扩展
 			web工程发布之后 第一次访问该页面(.jsp文件)时,tomcat将该文件解析成java文件(servlet),
 			进行编译运行(编译后的class文件位置在work目录下)
-			
-		
+
+
 		jsp指令指导jsp编译和运行的命令(基本上配置文件没必要自己配置)
-			
+
 			1）page指令 --- 属性最多的指令（实际开发中page指令默认）属性最多的一个指令，根据不同的属性，指导整个页面特性
 			格式：<%@ page 属性名1= "属性值1" 属性名2= "属性值2" ...%>
 			常用属性如下：
@@ -28,19 +28,19 @@ jsp文件
 			import：导入java的包
 			errorPage：当当前页面出错后跳转到哪个页面
 			isErrorPage：当前页面是一个处理错误的页面
-			
-			
+
+
 			2）include指令
 			页面包含（静态包含）指令，可以将一个jsp页面包含到另一个jsp页面中
 			格式：<%@ include file="被包含的文件地址"%>
 
-			
+
 			3）taglib指令
 			在jsp页面中引入标签库（jstl标签库、struts2标签库）
 			格式：<%@ taglib uri="标签库地址" prefix="前缀"%>
-			
-			
-			
+
+
+
 		jsp九大隐式对象
 			request	 获得用户的请求信息
 			response 向客户端反馈信息
@@ -48,46 +48,54 @@ jsp文件
 				out.write()  out.print() 相同
 				上述write 与嵌入式java代码均写入到 out缓冲区域
 				而response直接写入 二者次序不同
-			
+
 				out缓冲区 默认8kb 0表示关闭缓冲区
-				
-				
-			
-			
-			
+
+
+
+
+
 			config 获得初始化参数
 			session 服务端存取数据
 			application	页面的共享对象 等同于Servletcontext
 			page	页面翻译成servlet时的自身引用
 			exception 捕获错误 用于iserrorpage的page指令 使用 exception.getMessage();
-			
-			
-			pagecontext	上下文信息 
+
+
+			pagecontext	上下文信息
 				pagecontext可以获取所有域的值域设置
 				方法：
 				存取
 				pageContext.setAttribute("name", "jack",pageContext.APPLICATION_SCOPE);
 				pageContext.setAttribute("name", "jack",pageContext.PAGE_SCOPE );
 				pageContext.setAttribute("name", "jack", pageContext.REQUEST_SCOPE);
-				
-		
+
+
 				获得
 				pageContext.getAttribute("name",pageContext.PAGE_SCOPE);
-					
-				
+
+
 				总结:四个域 ServletContext  session request pagecontext  从小到大
-			
-			
-			
-		
-		
-		
-		
-		
-		
-		代码范例:
-			测试appication    demo：application1
-			
-			
-			
-		
+
+
+			jsp标签合并
+
+				动态发布 句法	<jsp:include page="/jsp_1.jsp"></jsp:include>
+							将jsp1 与jsp2进行先编译 编译后在合并翻译
+
+
+				静态发布 句法 <%@ include file="/jsp1.jsp" %>
+						将jsp1的内容直接写入jsp2文件中
+
+				动态包涵最终有2个java文件 而静态包涵有1个文件
+
+
+
+			jsp转发：用法简单
+
+			<jsp:forward page="/forword2.jsp"></jsp:forward>
+
+			解释一下 转发所发生在服务器内部 因此在url上会显示之前请求的页面 旨在 将自己无法处
+			理的请求转交给其他的servlet 因此 使用的是内部的url配置
+
+			重定向 是服务器外部行为 因此 要使用外部地址

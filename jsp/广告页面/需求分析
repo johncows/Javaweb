@@ -1,0 +1,20 @@
+原理:
+    1.利用sql语句获取与数据库的连接 获得商品的信息 注意在实际开发中 图片存储在服务器上，
+具体地址信息是以String 方式存储在数据库上
+
+    2.获得商品的参数 用集合形式存储 尝试中文打印
+        response.setHeader("Content-type", "text/html;charset=UTF-8");
+        QueryRunner qr = new QueryRunner(DatasourceUtil.getDataSource());
+  			List<Product> products = null;
+  			String sql = "select * from product";
+				products = qr.query(sql, new BeanListHandler<Product>(Product.class));
+
+    3.转发
+      本章的重点就是将servlet的处理结果通过request域转发给jsp 由jsp来表达内容
+
+    注意 犯了一个错误 web发布后 我直接去访问jsp网页 这个错误导致网页直接崩溃 因为当jsp去查询sql数据时
+    servlet并没有被访问 当获取键值时出现 空指针异常 由此发现我对 servlet的知识还是不够熟练 不过为了解
+    决这个问题 可以使用如下方法
+    if(引用 == null)
+      response.setStatus(302);
+      response.setHeader("location", "http://localhost/ADtest/productListServlet");
