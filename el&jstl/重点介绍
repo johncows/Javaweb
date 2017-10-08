@@ -1,0 +1,83 @@
+一.EL表达式
+从域中取出数据 ${域中存储的数据的name}
+${pageContext.request.contextPath}
+十一大对象
+pageScope,
+requestScope,
+sessionScope,
+applicationScope
+                ---- 获取JSP中域中的数据
+param,paramValues 	- 接收参数.
+相当于request.getParameter()  request.getParameterValues()
+
+header,headerValues	 - 获取请求头信息
+相当于request.getHeader(name)
+
+initParam				- 获取全局初始化参数
+相当于this.getServletContext().getInitParameter(name)
+
+cookie	 				- WEB开发中cookie
+相当于request.getCookies()---cookie.getName()---cookie.getValue()
+
+pageContext			- WEB开发中的pageContext.
+pageContext获得其他八大对象
+
+${pageContext.request.contextPath}
+相当于
+<%=pageContext.getRequest().getContextPath%>  但这句代码不能实现获得WEB应用的名称
+  原因 这个获得的request 不是httpRequest
+
+
+二. jstl核心库
+功能   简化代码 尽可能摒弃jsp中的嵌入代码 (ps:el只能取数据 不具备逻辑性)
+用法   jstl 从官网下载相应jar包 语法 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 注意导入包名
+
+2种语法结构 if foreach 具体代码见 /WEB18/WebContent/jstl_package/JSTL.jsp
+
+if详解：
+      注意：
+          <c:if test=""></c:if> test里面不具备逻辑判断功能 只区分字符 false true 此时就可以借助 EL的第三个功能 逻辑判断 进行判断
+          代码 <c:if test="${1>0}">hh</c:if> 也说明在jsp中 el的$符号 在“”可以被解析
+      案例：
+          http是不保存状态协议 为了表现网站登陆状态 并在各页面显示登录状态 使用jstl技术完成登陆显示
+          方法： 将user对象存入session中 利用el取出再进行判断是否为空 jstl的if判断进行判断
+
+foreach详解：
+  代码范例：
+    <c:forEach begin="0" end="6" var="i" >
+        ${i}<br>
+    </c:forEach>
+    --------------标准三段式----------------------------
+
+    <c:forEach items="${array}" var="p">
+		    ${p}<br>
+	  </c:forEach>
+    ---------------增强for循环--------------------------
+    <c:forEach items="${map}" var="entry">
+  		  ${entry.key }:${entry.value} <br>
+  	</c:forEach>
+    ----------------对map进行循环-----------------------
+    map进行循环时获得的是键值对
+
+
+    MVC 与 三层架构 有无关系？
+      答 无直接联系 三层架构是在整个web应用开发的一种方式 分为 web service dao 层
+  每一层都具有各自处理的业务 而 MVC 表示 Model （method）错误！   view   Controller
+  分别对于 javabean jsp servlet
+      图片见当前文件夹！！！
+
+      服务器开发时 分为三层
+          web层：与客户端交互
+          service层：复杂业务处理
+          dao层：与数据库进行交互
+          开发实践时 三层架构通过包结构体现
+
+
+
+    javaEE三层架构+MVC
+
+    web层：收集页面数据，封装数据，传递数据，指定响应jsp页面
+    service层：逻辑业务代码的编写
+    dao层：数据库的访问代码的编写
+
+    具体商城代码将在web25后重做！！

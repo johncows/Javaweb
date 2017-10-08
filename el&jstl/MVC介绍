@@ -1,0 +1,5 @@
+注意 该项目实现了MVC 实现商品列表打印！
+  根据包名显示 web应用的架构 domain属于实体包
+
+MVC实现原理 通过servlet获得所需页面的信息(数据库交互得到-----service与dao层)
+将数据存入request域中 接着转发到所需jsp中 通过jstl&el 简化代码 输出内容！
