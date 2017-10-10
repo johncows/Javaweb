@@ -5,5 +5,5 @@
 
   3.利用context对象实现了三个功能
     获得context对象 可以传入web应用中文件的相对地址 获得该文件的实际位置
-    获得context对象 利用getinitpar。。（）方法获得web-xml文件作为全局变量来执行某些操作
+    获得context对象 利用getinitparamer（）方法获得web-xml文件作为全局变量来执行某些操作
     利用context的对象域 以实现各servlet间的相互通信

@@ -3,6 +3,15 @@
    2.生成验证码（验证码原理及其实现）
 
 
+
+-----------------------import-------------------------------
+    request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+------------------------------------------------------------
+
+
+
 知识点：
   1.生成重定向
         response.setStatus(302);
