@@ -1,0 +1,52 @@
+   本节内容主要是对前面学习所有知识的一次回顾 主要内容有 三层架构 与 MVC 框架
+涉及到的技术有  jdbc servlet el&jstl  包括转发 与 字符参数拼接
+
+案例要求 建立一个后台管理系统来管理数据库信息，在实际开发过程中 也是前后台分开的
+
+目标需求  增删查改
+
+三层架构 ： dao web service
+          dao层 只进行最基本的sql语句操作并返回相应数据
+          web层 结合MVC 来动态显示数据
+          service层  该项目没有太复杂的操作
+
+
+
+增加 利用技术 jsp 与 servlet 直接在web层调用 servlet后 增加数据
+      date 与 uid(作为唯一标识) 直接加入数据库
+      --------------------注意 varchar(36) 长度------------------
+
+环境背景: 先观察admin/home.jsp 框架结构 左侧栏作为dtree的目录层
+
+查询  点击查询时 用servlet获取信息，封装到request域中进行转发，利用el与jstl取出
+      利用foreach 与${}来动态表现数据
+
+删除  删除一条数据用id作为唯一标识符 利用js 点击事件传递cid 再利用字符拼接 转到处理的servlet上
+
+修改 与删除相同 利用到js 传递唯一标识符 获取参数信息。 为了回显该数据，利用el插入 标签value 中
+     难点 在于对option的默认值调控 接下来进行的就是sql更新
+
+代码：
+          <script type="text/javascript">
+                  $(function(){
+                    //获得当前回显的product的cid
+                    $("#cid option[value='${product.cid }']").prop("selected",true);
+                    //是否热门
+                    $("#is_hot option[value='${product.is_hot }']").prop("selected",true);
+                  });
+
+
+                  //页面加载完毕后 确定那个option被选中
+                  /* window.onload = function(){
+                    //获得当前回显的product的cid
+                    var cid = "${product.cid }";
+                    //获得所有的<select name="cid">下的option
+                    var options = document.getElementById("cid").getElementsByTagName("option");
+                    //比较每一个option的value与cid
+                    for(var i=0;i<options.length;i++){
+                      if(cid==options[i].value){
+                        options[i].selected = true;
+                      }
+                    }
+                  } */
+          </script>
