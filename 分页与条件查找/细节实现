@@ -1,0 +1,71 @@
+该demo将会实现以下2个扩展功能
+1 完成搜索操作
+  实现步骤如下 ：依旧是依据三层架构基本原理 进行响应 查询 回显
+  难点: 进行条件搜索时 部分条件为空 这样的sql语句是不能写死的 解决该问题 用到了字符串拼接
+
+  demo
+  ------------------------------------------------------------------------------
+  StringBuilder sb = new StringBuilder("select * from product where 1=1 ");
+		List<String> ls = new ArrayList<String>();
+
+
+		if(con.getPname()!=null && !con.getPname().trim().equals("")) {
+			sb.append(" and pname like ?");
+			ls.add("%"+con.getPname()+"%");
+		}
+
+		if(con.getCid()!=null && !con.getCid().trim().equals("")) {
+			sb.append(" and cid =  ?");
+			ls.add(con.getCid());
+		}
+
+		if(con.getIsHot()!=null && !con.getIsHot().trim().equals("")) {
+			sb.append(" and is_hot = ?");
+			ls.add(con.getIsHot());
+		}
+
+
+		List<Product> query = qr.query(sb.toString(), new BeanListHandler<Product>(Product.class),ls.toArray());
+  ------------------------------------------------------------------------------
+
+  细节： 由于字符串的不断加长和变换 使用StringBuffer类 而非String
+         用数组来存储数据 存在一个问题 即不知道数据的个数 而数组必须先确定长度 可以使用容器
+         对于搜索条件不同 可以考虑建立一个Vo包 建立条件类 本项目用的是 Condition类
+
+  总结： 完成这个项目发现一些值得注意的点
+        例如
+              三层架构带来的优势就在于相同复杂业务 直接在service调用 大量提高了代码的重用性
+              利用 request 可以存取多个对象
+              需要熟悉jquery的用法
+              在域对象传输过程中一定要注意前后变量名对应
+
+
+
+2.分页
+    分页操作 采用的技术 主要是通过建立一个视图类
+
+    结构如下
+        当前页面 int currentPage;
+        页面内容显示数目 int currentCount;
+        总条数 int totalCount;
+        总页数 int totalPage;
+
+    利用分页查询 limit(a,b) a索引b个条目
+    存入 容器中 再放入视图类中进行存储 利用el与jstl处理 完成动态显示！
+
+    注意点 ：
+        当某个标签物超衔接的时候 一般不使用 # 使用href = “javascript:void(0)” 该按钮失效
+        使用jstl使jsp动态时 应当注意不能乱用空格 在这里空格将被错误解析
+
+
+
+
+小结：
+    本节难点不多 但比较绕 最值得研究的就是 product_list.jsp ，该文件下有2个循环
+      一个循环页目 一个循环商品类目
+        发现都是从pageBean内取出的 此处的pageBean类属于泛型
+        优点在于： 由于对list使用了多态 就可以使得任何类似于product的实体类都可以放入封装
+
+    也自己扩展实现了单商品链接点入的消息回显 采用的是字符串封装方式 至于视频内使用的是javascript方式进行传参也要有一定的了解
+
+    注意 jQuery 仍是重点
