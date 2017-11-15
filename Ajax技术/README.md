@@ -19,6 +19,7 @@
 实现内容包括同步 异步之间的差距 同时加载一个弹出框来查看是否异步
 
 #JavaScript
+
 ```
     function fun1(){
       //建立一个ajax引擎对象
@@ -52,6 +53,8 @@ json具有2种格式
   2. 数组/集合格式：[obj,obj,obj...]
 
 <h5>测试代码</h5>
+
+
 ```
 <script type="text/javascript">
 	 function test(){
